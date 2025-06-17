@@ -2,15 +2,15 @@ from datetime import datetime, timedelta
 from typing import Optional
 from jose import JWTError, jwt
 from passlib.context import CryptContext
-from .constants import SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_HOURS
 import os
 
 # Password hashing
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 # Get secret key from environment
-SECRET_KEY = os.getenv("SECRET_KEY", "fallback-secret-key")
-
+SECRET_KEY = os.getenv("SECRET_KEY", "fallback-secret-key-change-in-production")
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_HOURS = 24 * 7  # 1 week
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     """Verify a password against its hash"""
