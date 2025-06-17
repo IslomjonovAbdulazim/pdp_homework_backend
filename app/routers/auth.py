@@ -46,10 +46,7 @@ async def login(
 
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
-            detail={
-                "message": "Maximum number of devices reached. Please select a device to logout.",
-                "active_sessions": sessions_data
-            }
+            detail="Maximum devices reached. Use /auth/login/force to override."
         )
 
     # Create new session
@@ -59,7 +56,7 @@ async def login(
 
     return LoginResponse(
         access_token=access_token,
-        user=UserResponse.from_orm(user)
+        user=UserResponse.from_orm(user).dict()
     )
 
 
@@ -97,7 +94,7 @@ async def force_login(
 
     return LoginResponse(
         access_token=access_token,
-        user=UserResponse.from_orm(user)
+        user=UserResponse.from_orm(user).dict()
     )
 
 

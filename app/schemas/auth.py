@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional
+from typing import List
 from datetime import datetime
 
 
@@ -7,12 +7,6 @@ class LoginRequest(BaseModel):
     username: str
     password: str
     device_name: str
-
-
-class LoginResponse(BaseModel):
-    access_token: str
-    token_type: str = "bearer"
-    user: "UserResponse"
 
 
 class SessionResponse(BaseModel):
@@ -24,6 +18,12 @@ class SessionResponse(BaseModel):
     is_current: bool = False
 
 
+class LoginResponse(BaseModel):
+    access_token: str
+    token_type: str = "bearer"
+    user: dict  # User data as dict to avoid circular imports
+
+
 class DeviceConflictResponse(BaseModel):
     message: str
-    active_sessions: list[SessionResponse]
+    active_sessions: List[SessionResponse]
